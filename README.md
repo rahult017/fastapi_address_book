@@ -33,7 +33,7 @@ This project is a FastAPI-based Address Book application where users can:
 
 ```
 fastapi_address_book/
-├── app/
+├── apps/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── config.py
