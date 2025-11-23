@@ -1,0 +1,275 @@
+# 📘 FastAPI Address Book — Complete Documentation
+
+Welcome to the **FastAPI Address Book** project!
+This application provides a clean, modular, production-style API for managing addresses including geolocation filtering.
+
+This README includes:
+
+* 🚀 Project Overview
+* 📦 Folder Structure
+* 🛠 Installation & Setup
+* ▶️ Running the Application
+* 🔥 API Endpoints (Full List with Examples)
+* 🧩 Environment Variables
+* 🐳 Docker Instructions
+* 📝 Future Improvements
+
+---
+
+# 🚀 **1. Project Overview**
+
+This project is a FastAPI-based Address Book application where users can:
+
+* Create, update, delete addresses.
+* Store address details including latitude/longitude.
+* Validate all address fields via Pydantic.
+* Query nearby addresses based on distance and coordinates.
+* Use SQLModel + SQLite for persistence.
+* Explore all APIs via Swagger docs.
+
+---
+
+# 📦 **2. Folder Structure**
+
+```
+fastapi_address_book/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── config.py
+│   ├── database.py
+│   ├── logger.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── crud.py
+│   └── utils.py
+├── requirements.txt
+├── Dockerfile
+└── README.md
+```
+
+---
+
+# 🛠 **3. Installation & Setup**
+
+## **Prerequisites**
+
+* Python 3.9+
+* pip package manager
+* (Optional) Docker
+
+---
+
+## **3.1 Clone the Repository**
+
+```bash
+git clone <your_repo_url>
+cd fastapi_address_book
+```
+
+---
+
+## **3.2 Create a Virtual Environment**
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Windows
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+---
+
+## **3.3 Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+If you see an error related to `BaseSettings`, install:
+
+```bash
+pip install pydantic-settings
+```
+
+---
+
+## **3.4 Configure Environment Variables**
+
+Create `.env` file:
+
+```env
+APP_NAME="FastAPI Address Book"
+DATABASE_URL="sqlite:///./addresses.db"
+LOG_LEVEL="INFO"
+```
+
+---
+
+# ▶️ **4. Running the Application**
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Now visit:
+
+* **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
+* **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+# 🔥 **5. API Endpoints (Full List)**
+
+### Base URL:
+
+```
+http://localhost:8000
+```
+
+---
+
+## **5.1 Create Address**
+
+### **POST /addresses**
+
+**Request Body:**
+
+```json
+{
+  "name": "Home",
+  "street": "123 Main Street",
+  "city": "Berlin",
+  "state": "Berlin",
+  "country": "Germany",
+  "latitude": 52.52,
+  "longitude": 13.405
+}
+```
+
+**Response:** `201 CREATED`
+
+---
+
+## **5.2 Get Address by ID**
+
+### **GET /addresses/{id}**
+
+**Example:**
+
+```
+GET /addresses/1
+```
+
+---
+
+## **5.3 Update Address (Partial)**
+
+### **PATCH /addresses/{id}**
+
+```json
+{
+  "city": "New Berlin"
+}
+```
+
+---
+
+## **5.4 Delete Address**
+
+### **DELETE /addresses/{id}**
+
+Returns: `204 NO CONTENT`
+
+---
+
+## **5.5 Get Nearby Addresses**
+
+### **GET /addresses/nearby?latitude=52.52&longitude=13.405&radius_km=10**
+
+Parameters:
+
+* `latitude` (required)
+* `longitude` (required)
+* `radius_km` (default 5 km)
+* `limit` (default 20)
+* `offset` (default 0)
+
+**Example:**
+
+```
+GET /addresses/nearby?latitude=52.52&longitude=13.405&radius_km=10
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Home",
+    "street": "123 Main Street",
+    "city": "Berlin",
+    "state": "Berlin",
+    "country": "Germany",
+    "latitude": 52.52,
+    "longitude": 13.405
+  }
+]
+```
+
+---
+
+# 🐳 **6. Running with Docker**
+
+### Build image:
+
+```bash
+docker build -t fastapi-address-book .
+```
+
+### Run container:
+
+```bash
+docker run -p 8000:8000 fastapi-address-book
+```
+
+Access at:
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+# 🧩 **7. Technologies Used**
+
+* FastAPI
+* SQLModel (SQLAlchemy ORM + Pydantic models)
+* SQLite
+* Pydantic v2
+* Uvicorn
+* Docker
+
+---
+
+# 📝 **8. Future Improvements**
+
+✔ Add authentication (JWT or API key)
+✔ Add pagination for all list endpoints
+✔ Switch SQLite to PostgreSQL with PostGIS
+✔ Add Alembic migrations
+✔ Add unit tests with pytest
+
+---
+
+# 🎉 You're Ready to Use the API!
+
+If you need a **GitHub Repository**, **Postman Collection**, or **ZIP export**, just let me know!
