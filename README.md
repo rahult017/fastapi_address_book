@@ -33,7 +33,7 @@ This project is a FastAPI-based Address Book application where users can:
 
 ```
 fastapi_address_book/
-├── apps/
+├── app/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── config.py
@@ -226,8 +226,12 @@ GET /addresses/nearby?latitude=52.52&longitude=13.405&radius_km=10
 ```
 
 ---
+# 🐳 **6. Running Locally**
+```bash
+uvicorn apps.main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-# 🐳 **6. Running with Docker**
+# 🐳 **7. Running with Docker**
 
 ### Build image:
 
@@ -249,7 +253,7 @@ http://localhost:8000/docs
 
 ---
 
-# 🧩 **7. Technologies Used**
+# 🧩 **8. Technologies Used**
 
 * FastAPI
 * SQLModel (SQLAlchemy ORM + Pydantic models)
@@ -260,7 +264,7 @@ http://localhost:8000/docs
 
 ---
 
-# 📝 **8. Future Improvements**
+# 📝 **9. Future Improvements**
 
 ✔ Add authentication (JWT or API key)
 ✔ Add pagination for all list endpoints
