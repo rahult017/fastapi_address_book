@@ -1,0 +1,11 @@
+.idea/
+__pycache__/
+__pypackages__/
+env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+addresses.db
