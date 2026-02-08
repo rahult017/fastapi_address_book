@@ -112,7 +112,7 @@ async def read_addresses(
         skip = (page - 1) * size
         addresses, total = crud.get_addresses(db, skip=skip, limit=size)
         logger.info("Address fetch successfully {addresses}")
-        return schemas.AddressListResponse(
+        return schemas.AddressResponse(
             items=addresses,
             total=total,
             page=page,

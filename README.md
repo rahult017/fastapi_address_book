@@ -82,6 +82,8 @@ python -m apps.main
 
 ```bash
 docker build -t fastapi-address-book .
+  or
+docker build --no-cache
 ```
 
 ### Run the Container
@@ -93,7 +95,15 @@ docker run -p 8000:8000 fastapi-address-book
 ### Docker Compose
 
 ```bash
-docker-compose up
+docker compose up -d
+docker compose down
+```
+
+**Docker Prune command**
+
+```bash
+docker system prune -a
+docker volume prune -a
 ```
 
 ## 📚 API Reference
@@ -464,6 +474,8 @@ print(response.json())
 ```bash
 # Install production dependencies
 pip install -r requirements.txt
+
+python -m apps.main
 
 # Run with production server
 uvicorn apps.main:app --host 0.0.0.0 --port 8000 \

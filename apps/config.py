@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     DEBUG: bool = os.getenv("DEBUG", False)
     RELOAD: bool = os.getenv("DEBUG", True)
     HOST: str = os.getenv("HOST", "127.0.0.1")
-    PORT: int = os.getenv("PORT", 8000)
+    PORT: int = os.getenv("PORT", 5000)
 
     class Config:
         env_file = ".env"

@@ -1,0 +1,75 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Django migration files
+*/migrations/
+
+# Ignore any virtual environments
+.env
+.env.sample
+.env.template
+
+# Ignore static files collected by Django
+/staticfiles/
+/static
+/logs
+
+# Ignore database files
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore media files
+/media
+
+# Ignore Docker specific files and directories
+Dockerfile
+Dockerfile.*
+docker-compose.yml
+.dockerignore
+
+# Ignore any local development files or directories
+.local/
+*.pyc
+*.pyo
+*.mo
+*.db
+*.css.map
+*.egg-info
+*.sql.gz
+.cache
+.project
+.idea
+.pydevproject
+.idea/workspace.xml
+.DS_Store
+.git/
+.sass-cache
+.vagrant/
+.vscode/
+.static/
+.env/
+.venv/
+__pycache__
+dist
+docs
+env
+logs
+src/{{ project_name }}/settings/local.py
+src/node_modules
+web/media
+web/static/CACHE
+stats
+Dockerfile
+Dockerfile.*
+*.yml
+env.template
+README.md
+/env
+/venv
+.gitignore
+
+*.yml
+*.md
+addresses.db
