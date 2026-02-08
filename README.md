@@ -5,14 +5,14 @@ This application provides a clean, modular, production-style API for managing ad
 
 This README includes:
 
-* 🚀 Project Overview
-* 📦 Folder Structure
-* 🛠 Installation & Setup
-* ▶️ Running the Application
-* 🔥 API Endpoints (Full List with Examples)
-* 🧩 Environment Variables
-* 🐳 Docker Instructions
-* 📝 Future Improvements
+- 🚀 Project Overview
+- 📦 Folder Structure
+- 🛠 Installation & Setup
+- ▶️ Running the Application
+- 🔥 API Endpoints (Full List with Examples)
+- 🧩 Environment Variables
+- 🐳 Docker Instructions
+- 📝 Future Improvements
 
 ---
 
@@ -20,12 +20,12 @@ This README includes:
 
 This project is a FastAPI-based Address Book application where users can:
 
-* Create, update, delete addresses.
-* Store address details including latitude/longitude.
-* Validate all address fields via Pydantic.
-* Query nearby addresses based on distance and coordinates.
-* Use SQLModel + SQLite for persistence.
-* Explore all APIs via Swagger docs.
+- Create, update, delete addresses.
+- Store address details including latitude/longitude.
+- Validate all address fields via Pydantic.
+- Query nearby addresses based on distance and coordinates.
+- Use SQLModel + SQLite for persistence.
+- Explore all APIs via Swagger docs.
 
 ---
 
@@ -33,7 +33,7 @@ This project is a FastAPI-based Address Book application where users can:
 
 ```
 fastapi_address_book/
-├── app/
+├── apps/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── config.py
@@ -43,8 +43,10 @@ fastapi_address_book/
 │   ├── schemas.py
 │   ├── crud.py
 │   └── utils.py
+|   |__ geo_service.py
 ├── requirements.txt
 ├── Dockerfile
+|--
 └── README.md
 ```
 
@@ -54,9 +56,9 @@ fastapi_address_book/
 
 ## **Prerequisites**
 
-* Python 3.9+
-* pip package manager
-* (Optional) Docker
+- Python 3.9+
+- pip package manager
+- (Optional) Docker
 
 ---
 
@@ -117,12 +119,14 @@ LOG_LEVEL="INFO"
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  or
+python -m apps.main
 ```
 
 Now visit:
 
-* **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
-* **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+- **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ---
 
@@ -196,11 +200,11 @@ Returns: `204 NO CONTENT`
 
 Parameters:
 
-* `latitude` (required)
-* `longitude` (required)
-* `radius_km` (default 5 km)
-* `limit` (default 20)
-* `offset` (default 0)
+- `latitude` (required)
+- `longitude` (required)
+- `radius_km` (default 5 km)
+- `limit` (default 20)
+- `offset` (default 0)
 
 **Example:**
 
@@ -225,11 +229,62 @@ GET /addresses/nearby?latitude=52.52&longitude=13.405&radius_km=10
 ]
 ```
 
+## **5.6 Search Address**
+
+### **POST /addresses/search**
+
+Parameters:
+
+**Example:**
+
+```
+POST /addresses/search
+```
+
+**Request Body:**
+
+```json
+{
+  "latitude": -90,
+  "longitude": -180,
+  "distance_km": 1,
+  "limit": 100
+}
+```
+
+**Response:**
+
+````json
+[
+  {
+    "address": {
+      "id": 1,
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "Antarctic Research Station",
+      "street": "Ice Shelf Road",
+      "city": "McMurdo Station",
+      "state": "Ross Dependency",
+      "country": "Antarctica",
+      "latitude": -89.999,
+      "longitude": -179.999,
+      "postal_code": "00001",
+      "building_number": "1",
+      "apartment": "Lab A",
+      "created_at": "2026-02-08T06:31:43.534Z",
+      "updated_at": "2026-02-08T06:31:43.534Z"
+    },
+    "distance_km": 0.111
+  }
+]
+
+
 ---
 # 🐳 **6. Running Locally**
 ```bash
 uvicorn apps.main:app --host 0.0.0.0 --port 8000 --reload
-```
+ or
+python -m apps.main
+````
 
 # 🐳 **7. Running with Docker**
 
@@ -255,12 +310,12 @@ http://localhost:8000/docs
 
 # 🧩 **8. Technologies Used**
 
-* FastAPI
-* SQLModel (SQLAlchemy ORM + Pydantic models)
-* SQLite
-* Pydantic v2
-* Uvicorn
-* Docker
+- FastAPI
+- SQLModel (SQLAlchemy ORM + Pydantic models)
+- SQLite
+- Pydantic v2
+- Uvicorn
+- Docker
 
 ---
 

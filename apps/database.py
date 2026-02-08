@@ -4,7 +4,9 @@ from .config import settings
 
 
 engine = create_engine(
-    settings.DATABASE_URL, echo=False, connect_args={"check_same_thread": False}
+    settings.DATABASE_URL,
+    echo=False,
+    connect_args={"check_same_thread": False},
 )
 
 
@@ -18,7 +20,6 @@ def get_session():
 
 
 def get_db():
-    """Dependency to get database session"""
     db = Session(engine)
     try:
         yield db

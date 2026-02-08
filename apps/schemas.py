@@ -6,7 +6,6 @@ from decimal import Decimal
 from pydantic import BaseModel, Field, field_validator
 
 
-
 class Coordinate(BaseModel):
     latitude: Decimal = Field(gt=-90, lt=90)
     longitude: Decimal = Field(gt=-180, lt=180)
@@ -21,20 +20,26 @@ class AddressCreate(BaseModel):
     latitude: float
     longitude: float
     postal_code: Optional[str] = Field(None, min_length=1, max_length=20)
-    building_number: Optional[str] = Field(None, max_length=50, description="Building number")
-    apartment: Optional[str] = Field(None, max_length=50, description="Apartment/suite number")
-    
-    @field_validator('postal_code')
+    building_number: Optional[str] = Field(
+        None, max_length=50, description="Building number"
+    )
+    apartment: Optional[str] = Field(
+        None, max_length=50, description="Apartment/suite number"
+    )
+
+    @field_validator("postal_code")
     @classmethod
     def validate_postal_code(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return None
-        
+
         # Basic postal code validation - can be customized per country
-        if not re.match(r'^[A-Za-z0-9\s\-]+$', v):
-            raise ValueError('Invalid postal code format')
-        return v.strip()
-    
+        if v is not None:
+            if not re.match(r"^[A-Za-z0-9\s\-]+$", v):
+                raise ValueError("Invalid postal code format")
+            return v.strip()
+        return v
+
     @field_validator("latitude")
     @classmethod
     def validate_latitude(cls, v: float) -> float:
@@ -63,20 +68,24 @@ class AddressUpdate(BaseModel):
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     postal_code: Optional[str] = Field(None, min_length=1, max_length=20)
-    building_number: Optional[str] = Field(None, max_length=50, description="Building number")
-    apartment: Optional[str] = Field(None, max_length=50, description="Apartment/suite number")
+    building_number: Optional[str] = Field(
+        None, max_length=50, description="Building number"
+    )
+    apartment: Optional[str] = Field(
+        None, max_length=50, description="Apartment/suite number"
+    )
 
-    @field_validator('postal_code')
+    @field_validator("postal_code")
     @classmethod
     def validate_postal_code(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return None
         if v is not None:
-            if not re.match(r'^[A-Za-z0-9\s\-]+$', v):
-                raise ValueError('Invalid postal code format')
+            if not re.match(r"^[A-Za-z0-9\s\-]+$", v):
+                raise ValueError("Invalid postal code format")
             return v.strip()
         return v
-    
+
     @field_validator("latitude")
     @classmethod
     def validate_latitude(cls, v: Optional[float]) -> Optional[float]:
@@ -94,28 +103,37 @@ class AddressUpdate(BaseModel):
         if v < -180 or v > 180:
             raise ValueError("longitude must be between -180 and 180")
         return v
-    
+
+
 class AddressSearchQuery(BaseModel):
     """Schema for address search query"""
+
     latitude: float = Field(..., ge=-90, le=90, description="Center point latitude")
     longitude: float = Field(..., ge=-180, le=180, description="Center point longitude")
-    distance_km: float = Field(..., gt=0, le=10000, description="Search radius in kilometers")
-    limit: Optional[int] = Field(100, ge=1, le=1000, description="Maximum number of results")
+    distance_km: float = Field(
+        ..., gt=0, le=10000, description="Search radius in kilometers"
+    )
+    limit: Optional[int] = Field(
+        100, ge=1, le=1000, description="Maximum number of results"
+    )
+
 
 class AddressInDB(AddressCreate):
     """Schema for address stored in database"""
+
     id: int
     uuid: str
     created_at: datetime
     updated_at: Optional[datetime]
-    
+
     class Config:
         from_attributes = True
+
 
 class AddressResponse(BaseModel):
     id: int
     uuid: str
-    name: Optional[str] = None          # ← key change
+    name: Optional[str] = None  # ← key change
     street: str
     city: str
     state: Optional[str] = None
@@ -130,16 +148,23 @@ class AddressResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
 class AddressSearchResult(BaseModel):
     """Schema for address search result"""
+
     address: AddressResponse
-    distance_km: float = Field(..., description="Distance from search center in kilometers")
-    
+    distance_km: float = Field(
+        ..., description="Distance from search center in kilometers"
+    )
+
     class Config:
         from_attributes = True
-    
+
+
 class HealthCheck(BaseModel):
     """Health check response schema"""
+
     status: str
     version: str
     database: str
